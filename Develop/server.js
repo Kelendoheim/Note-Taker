@@ -1,13 +1,26 @@
 const express = require("express");
 const fs = require("fs");
 const app = express();
+const path = require("path");
 
 const PORT = process.env.PORT || 8080;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/api/db", (req, res) => {
+
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "./public/index.html"));
+});
+
+app.get("/notes", function(req, res) {
+  res.sendFile(path.join(__dirname, "./public/notes.html"));
+});
+
+// Displays all characters
+
+
+app.get("/api/notes", (req, res) => {
   fs.readFile("db/db.json", "utf-8", (err, data) => {
     if (err) {
       console.log(err);
