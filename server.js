@@ -7,14 +7,15 @@ const PORT = process.env.PORT || 8080;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static(path.join("./public")));
 
 
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "./public/index.html"));
+  res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 
 app.get("/notes", function(req, res) {
-  res.sendFile(path.join(__dirname, "./public/notes.html"));
+  res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
 
 // Displays all characters
@@ -38,7 +39,7 @@ app.get("/api/notes", (req, res) => {
   });
 });
 
-app.post("/api/db", (req, res) => {
+app.post("/api/notes", (req, res) => {
   console.log(req.body);
   if (!req.body.title || !req.body.text) {
     return res.status(400).json({
