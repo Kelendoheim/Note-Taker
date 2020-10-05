@@ -76,11 +76,21 @@ app.listen(PORT, () => {
 
 app.delete("/api/notes/:id", function(req, res){
   console.log(req.params.id)
-  fs.readFile("db/db.json", "utf-8", (err, data) => {
+  fs.readFile(__dirname + "/db/db.json", "utf-8", (err, data) => {
     if(err) throw err
       const notesArray = JSON.parse(data)
-      const notesNotDeleted = notesArray.filter((note) => note.id !== req.params.id)
-      fs.writeFile("db/db.json", JSON.stringify(notesNotDeleted), (err) => {
+      console.log(notesArray)
+      const newArray = []
+      for (i = 0; i < notesArray.length; i++) {
+        if (notesArray[i].id != req.params.id) {
+          newArray.push(notesArray[i])
+        }
+      }
+
+
+      
+      console.log(newArray)
+      fs.writeFile(__dirname + "/db/db.json", JSON.stringify(newArray), (err) => {
         if (err) {
           console.log(err)
         }else {
