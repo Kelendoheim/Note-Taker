@@ -48,6 +48,7 @@ app.post("/api/notes", (req, res) => {
     }
     console.log(data);
     const updatedData = JSON.parse(data);
+    req.body.id = updatedData.length
     updatedData.push(req.body);
     console.log(updatedData)
     fs.writeFile("db/db.json", JSON.stringify(updatedData), (err) => {
@@ -70,4 +71,9 @@ app.post("/api/notes", (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`);
+});
+
+
+app.delete("/api/notes/:id", function(req, res){
+console.log(req.params.id)
 });
