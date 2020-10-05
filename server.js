@@ -75,12 +75,18 @@ app.listen(PORT, () => {
 
 
 app.delete("/api/notes/:id", function(req, res){
+  console.log(req.params.id)
   fs.readFile("db/db.json", "utf-8", (err, data) => {
     if(err) throw err
       const notesArray = JSON.parse(data)
       const notesNotDeleted = notesArray.filter((note) => note.id !== req.params.id)
       fs.writeFile("db/db.json", JSON.stringify(notesNotDeleted), (err) => {
-        if (err) throw err
+        if (err) {
+          console.log(err)
+        }else {
+          res.sendFile(__dirname + "/db/db.json");
+        }
+
         console.log("Successfully deleted file")
       }) 
   })
